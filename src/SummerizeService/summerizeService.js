@@ -16,18 +16,19 @@ const summerizeFeedback = async (feedbackBody) => {
     const input = createInput(feedbackSummarizer);
     const modifiedInput = prepareInput(input, feedback);
     const response = await invokeModel(modifiedInput);
+
     const parsedResponse = parseResponse(response.body);
+
     const summeryResults = JSON.parse(parsedResponse.outputs[0].text);
 
     return {
       summery: summeryResults,
     };
   } catch (error) {
-    console.error("Feedback ", error);
-    console.error("Feedback analysis failed:", error);
     await ErrorHandlingService.handleModelError(error);
   }
 };
+
 const invokeModel = async (input) => {
   return BedrockClientService.invokeModel(input);
 };
@@ -43,8 +44,12 @@ const prepareInput = (input, feedback) => {
 };
 
 const parseResponse = (rawResponse) => {
-  const jsonString = new TextDecoder().decode(rawResponse);
-  return JSON.parse(jsonString);
+  try {
+    const jsonString = new TextDecoder().decode(rawResponse);
+    return JSON.parse(jsonString);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default summerizeFeedback;

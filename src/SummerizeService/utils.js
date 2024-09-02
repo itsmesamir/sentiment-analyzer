@@ -8,7 +8,7 @@ export function createInput(promptGenerator) {
       prompt: promptGenerator,
       temperature: 0,
       top_p: 1,
-      max_tokens: 5000,
+      max_tokens: 4000,
     },
   };
 }

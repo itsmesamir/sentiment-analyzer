@@ -9,14 +9,8 @@ const app = express();
 
 app.use(express.json());
 
-app.post("/analyze_feedback", async (req, res) => {
-  console.log("req", req.body);
-  const getFeedback = await TextProcessing.summarizeFeedback(req.body);
-  res.send(getFeedback);
-});
-
 app.post("/summerize", async (req, res) => {
-  // console.log("req", req.body);
+  console.log("req", req.body);
   const getSummerize = await summarizeFeedback(req.body);
   res.send(getSummerize);
 });
